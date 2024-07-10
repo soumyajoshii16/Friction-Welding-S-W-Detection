@@ -1,5 +1,6 @@
 flask
-pytorch
+torch
+torchvision
 scikit-learn
 numpy
-open-cv
+opencv-python
