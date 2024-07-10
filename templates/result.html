@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel Type Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 10px;
+            background-color: gainsboro;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+        }
+        .wheel-type-button {
+            width: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+            background-color: gray;
+            color: white;
+        }
+        .webcam-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Wheel Type</h1>
+        <form id="wheelTypeForm" action="/" method="post">
+            <input type="hidden" name="wheel_type" id="wheel_type" value="">
+            <button type="button" id="type1_button" class="wheel-type-button" onclick="setWheelType('328')">328</button>
+            <button type="button" id="type2_button" class="wheel-type-button" onclick="setWheelType('165')">165</button>
+        </form>
+        <div class="webcam-container">
+            <img id="webcam_feed" src="{{ url_for('video_feed') }}" alt="Webcam Feed">
+        </div>
+        {% if validity_text %}
+            <h2>Prediction Result</h2>
+            <p>{{ validity_text }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        let selectedWheelType = localStorage.getItem('selectedWheelType') || '';
+
+        function setWheelType(type) {
+            selectedWheelType = type;
+            localStorage.setItem('selectedWheelType', type);
+            document.getElementById('wheel_type').value = type;
+            document.getElementById('type1_button').style.backgroundColor = type === '328' ? 'green' : 'gray';
+            document.getElementById('type2_button').style.backgroundColor = type === '165' ? 'red' : 'gray';
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            if (selectedWheelType) {
+                document.getElementById('wheel_type').value = selectedWheelType;
+                setWheelType(selectedWheelType);
+            }
+        });
+
+        function updateWebcamFeed() {
+            var feedUrl = "{{ url_for('video_feed') }}";
+            document.getElementById("webcam_feed").src = feedUrl + '?' + new Date().getTime();
+        }
+        setInterval(updateWebcamFeed, 1000);
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                if (selectedWheelType) {
+                    document.getElementById('wheelTypeForm').submit();
+                } else {
+                    alert('Please select a wheel type first.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
