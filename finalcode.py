@@ -55,7 +55,7 @@ def model_predict(wheel_type, detected_colors):
 
 class VideoCamera:
     def __init__(self):
-        self.video = cv2.VideoCapture(1)
+        self.video = cv2.VideoCapture(0)
         if not self.video.isOpened():
             raise Exception("Could not open video device")
         self.video.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -148,7 +148,7 @@ def handle_prediction_file():
 
 def start_http_server():
     try:
-        subprocess.Popen([sys.executable, "-m", "http.server", "8000"], cwd="C:\\Users\\91999\\OneDrive\\Desktop\\Git Uploads\\Friction-Welding-S-W-Detection")
+        subprocess.Popen([sys.executable, "-m", "http.server", "8000"])
         
         # Open the browser automatically with your Flask app's URL
         webbrowser.open('http://127.0.0.1:5000')
