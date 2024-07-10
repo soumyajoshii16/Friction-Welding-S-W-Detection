@@ -148,7 +148,7 @@ def handle_prediction_file():
 
 def start_http_server():
     try:
-        subprocess.Popen([sys.executable, "-m", "http.server", "8000"], cwd="C:\\Users\\qa598\\Downloads\\CVML Project-20240701T055620Z-001\\CVML Project")
+        subprocess.Popen([sys.executable, "-m", "http.server", "8000"], cwd="C:\\Users\\91999\\OneDrive\\Desktop\\Git Uploads\\Friction-Welding-S-W-Detection")
         
         # Open the browser automatically with your Flask app's URL
         webbrowser.open('http://127.0.0.1:5000')
