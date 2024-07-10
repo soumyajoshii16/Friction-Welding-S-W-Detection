@@ -1,0 +1,5 @@
+flask
+pytorch
+scikit-learn
+numpy
+open-cv
