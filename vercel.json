@@ -1,4 +1,9 @@
 {
     "version": 2,
-    "rewrites": [{ "source": "/(.*)", "destination": "/result.html" }]
-  }
+    "builds": [
+        {"src": "finalcode.py", "use": "@vercel/python"}
+    ],
+    "routes": [
+        {"src": "/(.*)", "dest": "finalcode.py"}
+    ]
+}
